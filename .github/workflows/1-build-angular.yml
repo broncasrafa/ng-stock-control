@@ -30,17 +30,17 @@ jobs:
       with:
         node-version: '20.x' 
         cache: 'npm'
-        cache-dependency-path: 'ng-stock-control/stock-control-front/package-lock.json'
+        cache-dependency-path: 'stock-control-front/package-lock.json'
 
     # Install the dependencies need to build the app
     - name: install dependencies
       run: npm ci # Use npm ci for better performance in CI
-      working-directory: ng-stock-control/stock-control-front  # Define o diretório de trabalho
+      working-directory: stock-control-front  # Define o diretório de trabalho
 
     # Runs a set of commands to build
     - name: build
       run: npm run build
-      working-directory: ng-stock-control/stock-control-front  # Define o diretório de trabalho
+      working-directory: stock-control-front  # Define o diretório de trabalho
       
    # - name: Use Node.js ${{ matrix.node-version }}
    #   uses: actions/setup-node@v4
