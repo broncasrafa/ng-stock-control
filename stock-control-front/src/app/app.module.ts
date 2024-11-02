@@ -18,12 +18,14 @@ import { ToastModule } from "primeng/toast";
 // components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './modules/home/home.component';
+import { NotificationMessageComponent } from './shared/components/notification-message/notification-message.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    NotificationMessageComponent
   ],
   imports: [
     BrowserModule,

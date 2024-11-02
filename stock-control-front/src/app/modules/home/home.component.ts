@@ -1,8 +1,11 @@
 
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/services/user/user.service';
+import { NotificationService, NotificationType } from 'src/app/services/notification/notification.service';
+
 import { AuthRequest } from 'src/app/models/interfaces/auth/AuthRequest';
 import { AuthResponse } from 'src/app/models/interfaces/auth/AuthResponse';
 import { SignupUserRequest } from 'src/app/models/interfaces/user/SignupUserRequest';
@@ -32,7 +35,8 @@ export class HomeComponent {
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private cookieService: CookieService) { }
+    private cookieService: CookieService,
+    private notificationService: NotificationService) { }
 
 
 
@@ -43,13 +47,12 @@ export class HomeComponent {
         .subscribe({
           next: (response: AuthResponse) => {
             if (response) {
-              alert(`Bem  vindo ${response.name}!`);
               this.cookieService.set('USER_INFO', response?.token);
               this.loginForm.reset();
-              this.loginCard = true;
+              this.notificationService.showNotificationMessage('Sucesso', `Bem vindo ${response.name}!`, NotificationType.SUCCESS);
             }
           },
-          error: (err) => console.log(err),
+          error: (err) => this.notificationService.showNotificationMessage('Erro', 'Ocorreu um erro ao tentar realizar o login', NotificationType.ERROR),
         })
     }
   }
@@ -61,12 +64,12 @@ export class HomeComponent {
         .subscribe({
           next: (response: SignupUserResponse) => {
             if (response) {
-              alert('Salvo com sucesso');
               this.signupForm.reset();
               this.loginCard = true;
+              this.notificationService.showNotificationMessage('Sucesso', `Usuário registrado com sucesso!`, NotificationType.SUCCESS);
             }
           },
-          error: (err) => console.log(err),
+          error: (err) => this.notificationService.showNotificationMessage('Erro', 'Ocorreu um erro ao tentar realizar o cadastro', NotificationType.ERROR),
         })
     }
   }
