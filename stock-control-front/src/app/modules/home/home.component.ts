@@ -1,6 +1,7 @@
 
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -14,12 +15,14 @@ import { Router } from '@angular/router';
 import { AppConstants } from 'src/app/core/constants/app.constants';
 
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
+  private destroy$ = new Subject<void>();
 
   loginCard: boolean = true;
 
@@ -47,6 +50,7 @@ export class HomeComponent {
     if (this.loginForm.value && this.loginForm.valid) {
       const data = this.loginForm.value as AuthRequest;
       this.userService.authUser(data)
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response: AuthResponse) => {
             if (response) {
@@ -65,6 +69,7 @@ export class HomeComponent {
     if (this.signupForm.value && this.signupForm.valid) {
       const data = this.signupForm.value as SignupUserRequest;
       this.userService.signupUser(data)
+        .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response: SignupUserResponse) => {
             if (response) {
@@ -80,5 +85,8 @@ export class HomeComponent {
 
 
 
-
+  ngOnDestroy(): void {
+      this.destroy$.next();
+      this.destroy$.complete();
+  }
 }
