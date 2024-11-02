@@ -23,7 +23,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: List contents of working directory
-      run: ls -la ng-stock-control/stock-control-front
+      run: ls -la
 
     - name: set up node.js
       uses: actions/setup-node@v4
