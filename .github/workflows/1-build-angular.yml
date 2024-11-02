@@ -20,18 +20,18 @@ jobs:
 
     steps:
     - name: checking out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: set up node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '18.x'
+        node-version: '22.x' 
         cache: 'npm'
-        cache-dependency-path: 'ng-stock-control/stock-control-front/package-lock.json'
+        cache-dependency-path: 'ng-stock-control/ng-stock-control/stock-control-front/package-lock.json'
 
     # Navegue para o diretório do projeto Angular
-    - name: Change directory to stock-control-front
-      run: cd ng-stock-control/stock-control-front
+    # - name: Change directory to stock-control-front
+    #   run: cd ng-stock-control/stock-control-front
 
     # Install the dependencies need to build the app
     - name: install dependencies
