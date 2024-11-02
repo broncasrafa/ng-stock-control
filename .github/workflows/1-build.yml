@@ -1,0 +1,47 @@
+name: "1 - Build"
+
+on:
+  push:
+    branches: [ "main" ]
+    # branches: [ "feature**" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: build
+
+    # strategy:
+     # matrix:
+      #  node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - name: checking out code
+      uses: actions/checkout@v4
+
+    - name: set up node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+        cache-dependency-path: package-lock.json
+
+    # Install the dependencies need to build the app
+    - name: install dependencies
+      run: npm install
+
+    # Runs a set of commands to build
+    - name: build
+      run: npm run build
+      
+   # - name: Use Node.js ${{ matrix.node-version }}
+   #   uses: actions/setup-node@v4
+   #   with:
+   #     node-version: ${{ matrix.node-version }}
+   #     cache: 'npm'
+   # - run: npm ci
+   # - run: npm run build --if-present
+   # - run: npm test
