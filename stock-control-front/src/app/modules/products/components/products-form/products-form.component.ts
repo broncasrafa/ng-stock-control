@@ -6,7 +6,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 import { NotificationType } from 'src/app/core/enums/notificationType.enum';
 import { ProductEvent } from 'src/app/core/enums/productEvents.enum';
-import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
+import { EventAction } from 'src/app/models/interfaces/EventAction';
 import { CreateProductRequest } from 'src/app/models/interfaces/products/request/CreateProductRequest';
 import { EditProductRequest } from 'src/app/models/interfaces/products/request/EditProductRequest';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
@@ -137,13 +137,13 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
           .subscribe({
             next: (response) => {
               this.notificationService.showNotificationMessage('Sucesso', 'Produto atualizado com sucesso', NotificationType.SUCCESS);
+              this.editProductForm.reset();
             },
             error: (err) => {
               this.notificationService.showNotificationMessage('Erro', 'Ocorreu um erro ao tentar editar os dados do produto', NotificationType.ERROR)
+              this.editProductForm.reset();
             }
           });
-
-      this.editProductForm.reset();
     }
   }
 

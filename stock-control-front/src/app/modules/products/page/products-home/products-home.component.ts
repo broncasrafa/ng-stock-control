@@ -6,7 +6,7 @@ import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { NotificationType } from 'src/app/core/enums/notificationType.enum';
 import { DeleteProductAction } from 'src/app/models/interfaces/products/event/DeleteProductAction';
-import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
+import { EventAction } from 'src/app/models/interfaces/EventAction';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { ProductsDataTransferService } from 'src/app/services/products/products-data-transfer.service';
