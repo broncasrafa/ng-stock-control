@@ -27,7 +27,7 @@ jobs:
       with:
         node-version: '18.x'
         cache: 'npm'
-        cache-dependency-path: 'stock-control/stock-control-front/package-lock.json'
+        # cache-dependency-path: 'stock-control/stock-control-front/package-lock.json'
 
     # Navegue para o diretório do projeto Angular
     - name: Change directory to stock-control-front
