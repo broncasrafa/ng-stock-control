@@ -4,6 +4,8 @@ import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 import { DeleteProductResponse } from 'src/app/models/interfaces/products/response/DeleteProductResponse';
+import { CreateProductRequest } from 'src/app/models/interfaces/products/request/CreateProductRequest';
+import { CreateProductResponse } from 'src/app/models/interfaces/products/response/CreateProductResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -28,5 +30,9 @@ export class ProductsService {
         },
       }
     );
+  }
+
+  createProduct(request: CreateProductRequest): Observable<CreateProductResponse> {
+    return this.http.post<CreateProductResponse>(`${this.API_URL}/product`, request);
   }
 }

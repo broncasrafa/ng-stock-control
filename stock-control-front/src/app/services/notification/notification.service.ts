@@ -18,7 +18,7 @@ export class NotificationService {
    * @param notificationType  - o tipo de notificação. (success, info, warn, error)
    * @param duration  - a duração em milisegundos da notificação. Por padrão é 2000 ms
    */
-  showNotificationMessage(title: string, message: string, notificationType: string, duration: number = 2000) {
+  showNotificationMessage(title: string, message: string, notificationType: string, duration: number = 3000) {
     if (!this.isValidNotificationType(notificationType))
       throw new Error('Tipo de notificação inválida');
 

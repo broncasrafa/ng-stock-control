@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AppConstants } from 'src/app/core/constants/app.constants';
-import { SignupUserRequest } from 'src/app/models/interfaces/user/SignupUserRequest';
-import { SignupUserResponse } from 'src/app/models/interfaces/user/SignupUserResponse';
-import { AuthRequest } from 'src/app/models/interfaces/auth/AuthRequest';
-import { AuthResponse } from 'src/app/models/interfaces/auth/AuthResponse';
+import { SignupUserRequest } from 'src/app/models/interfaces/user/request/SignupUserRequest';
+import { SignupUserResponse } from 'src/app/models/interfaces/user/response/SignupUserResponse';
+import { AuthRequest } from 'src/app/models/interfaces/auth/request/AuthRequest';
+import { AuthResponse } from 'src/app/models/interfaces/auth/response/AuthResponse';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({

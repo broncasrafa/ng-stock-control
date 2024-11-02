@@ -21,11 +21,13 @@ import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmationService } from 'primeng/api';
 import { ProductsHomeComponent } from './page/products-home/products-home.component';
 import { ProductsTableComponent } from './components/products-table/products-table.component';
+import { ProductsFormComponent } from './components/products-form/products-form.component';
 
 @NgModule({
   declarations: [
     ProductsHomeComponent,
-    ProductsTableComponent
+    ProductsTableComponent,
+    ProductsFormComponent
   ],
   imports: [
     CommonModule,
