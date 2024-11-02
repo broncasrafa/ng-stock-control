@@ -20,10 +20,12 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { TooltipModule } from 'primeng/tooltip';
 import { ConfirmationService } from 'primeng/api';
 import { ProductsHomeComponent } from './page/products-home/products-home.component';
+import { ProductsTableComponent } from './components/products-table/products-table.component';
 
 @NgModule({
   declarations: [
-    ProductsHomeComponent
+    ProductsHomeComponent,
+    ProductsTableComponent
   ],
   imports: [
     CommonModule,
