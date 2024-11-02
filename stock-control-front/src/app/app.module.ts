@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 // services
@@ -21,6 +22,7 @@ import { ButtonModule } from "primeng/button";
 // components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './modules/home/home.component';
+import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { HomeComponent } from './modules/home/home.component';
   ],
   providers: [
     CookieService,
-    MessageService
+    MessageService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

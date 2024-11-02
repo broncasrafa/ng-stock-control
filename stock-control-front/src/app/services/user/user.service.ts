@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AppConstants } from 'src/app/core/constants/app.constants';
 import { SignupUserRequest } from 'src/app/models/interfaces/user/SignupUserRequest';
 import { SignupUserResponse } from 'src/app/models/interfaces/user/SignupUserResponse';
 import { AuthRequest } from 'src/app/models/interfaces/auth/AuthRequest';
 import { AuthResponse } from 'src/app/models/interfaces/auth/AuthResponse';
 import { CookieService } from 'ngx-cookie-service';
-
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +28,7 @@ export class UserService {
   }
 
   isLoggedIn(): boolean {
-    const JWT_TOKEN = this.cookie.get('USER_INFO');
+    const JWT_TOKEN = this.cookie.get(AppConstants.COOKIE_USER_INFO);
     return JWT_TOKEN ? true : false;
   }
 }

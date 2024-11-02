@@ -11,6 +11,7 @@ import { AuthResponse } from 'src/app/models/interfaces/auth/AuthResponse';
 import { SignupUserRequest } from 'src/app/models/interfaces/user/SignupUserRequest';
 import { SignupUserResponse } from 'src/app/models/interfaces/user/SignupUserResponse';
 import { Router } from '@angular/router';
+import { AppConstants } from 'src/app/core/constants/app.constants';
 
 
 @Component({
@@ -49,7 +50,7 @@ export class HomeComponent {
         .subscribe({
           next: (response: AuthResponse) => {
             if (response) {
-              this.cookieService.set('USER_INFO', response?.token);
+              this.cookieService.set(AppConstants.COOKIE_USER_INFO, response?.token);
               this.loginForm.reset();
               this.router.navigate(['/dashboard']);
               this.notificationService.showNotificationMessage('Sucesso', `Bem vindo ${response.name}!`, NotificationType.SUCCESS);
