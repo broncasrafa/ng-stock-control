@@ -11,11 +11,13 @@ import { DialogService } from 'primeng/dynamicdialog';
 
 import { NotificationMessageComponent } from './components/notification-message/notification-message.component';
 import { ToolbarNavigationComponent } from './components/toolbar-navigation/toolbar-navigation.component';
+import { ShortenPipe } from './pipes/shorten.pipe';
 
 @NgModule({
   declarations: [
     NotificationMessageComponent,
-    ToolbarNavigationComponent
+    ToolbarNavigationComponent,
+    ShortenPipe
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { ToolbarNavigationComponent } from './components/toolbar-navigation/tool
   ],
   exports: [
     NotificationMessageComponent,
-    ToolbarNavigationComponent
+    ToolbarNavigationComponent,
+    ShortenPipe
   ],
   providers: [DialogService, CurrencyPipe],
 })
