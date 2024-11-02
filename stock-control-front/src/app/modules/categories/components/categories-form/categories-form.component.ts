@@ -35,8 +35,32 @@ export class CategoriesFormComponent implements OnInit, OnDestroy {
     private notificationService: NotificationService) {}
 
   ngOnInit(): void {
+    this.categoryAction = this.ref.data;
 
+    if ((this.categoryAction?.event?.action === this.editCategoryAction &&
+          this.categoryAction?.event?.categoryName !== null) || undefined) {
+      this.setCategoryName(this.categoryAction?.event?.categoryName as string);
+    }
   }
+
+  setCategoryName(categoryName: string): void {
+    if (categoryName) {
+      this.categoryForm.setValue({
+        name: categoryName,
+      });
+    }
+  }
+
+  handleSubmitCategoryAction(): void {
+    if (this.categoryAction?.event?.action === this.addCategoryAction) {
+      this.handleSubmitAddCategory();
+    } else if (this.categoryAction?.event?.action === this.editCategoryAction) {
+      this.handleSubmitEditCategory();
+    }
+
+    return;
+  }
+
 
   handleSubmitAddCategory(): void {
     if (this.categoryForm?.value && this.categoryForm?.valid) {
@@ -56,6 +80,30 @@ export class CategoriesFormComponent implements OnInit, OnDestroy {
           error: (err) => {
             this.categoryForm.reset();
             this.notificationService.showNotificationMessage('Erro', 'Ocorreu um erro ao tentar registrar a categoria', NotificationType.ERROR);
+          },
+        });
+    }
+  }
+
+  handleSubmitEditCategory(): void {
+    if (this.categoryForm?.value &&
+        this.categoryForm?.valid &&
+        this.categoryAction?.event?.id) {
+      const requestEditCategory: { name: string; category_id: string } = {
+        name: this.categoryForm?.value?.name as string,
+        category_id: this.categoryAction?.event?.id,
+      };
+
+      this.categoriesService.editCategory(requestEditCategory)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => {
+            this.categoryForm.reset();
+            this.notificationService.showNotificationMessage('Sucesso', 'Categoria atualizada com sucesso', NotificationType.SUCCESS);
+          },
+          error: (err) => {
+            this.categoryForm.reset();
+            this.notificationService.showNotificationMessage('Erro', 'Ocorreu um erro ao tentar atualizar os dados da categoria', NotificationType.ERROR);
           },
         });
     }
