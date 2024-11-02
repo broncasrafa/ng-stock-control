@@ -20,18 +20,19 @@ jobs:
 
     steps:
     - name: checking out code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: set up node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v3
       with:
         node-version: '18.x'
         cache: 'npm'
-        cache-dependency-path: package-lock.json
+        cache-dependency-path: '/stock-control-front/package-lock.json'
 
     # Install the dependencies need to build the app
     - name: install dependencies
-      run: npm install
+      # run: npm install
+      run: npm ci # Use npm ci for better performance in CI
 
     # Runs a set of commands to build
     - name: build
