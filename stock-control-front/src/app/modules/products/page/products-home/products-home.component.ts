@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
 import { NotificationType } from 'src/app/core/enums/notificationType.enum';
+import { DeleteProductAction } from 'src/app/models/interfaces/products/event/DeleteProductAction';
 import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 import { NotificationService } from 'src/app/services/notification/notification.service';
@@ -23,7 +25,8 @@ export class ProductsHomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private productsService: ProductsService,
     private productsDataTransferService: ProductsDataTransferService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private confirmationService: ConfirmationService
   ) {}
 
 
@@ -61,6 +64,35 @@ export class ProductsHomeComponent implements OnInit, OnDestroy {
   handleProductAction(event: EventAction): void {
     if (event) {
       console.log('DADOS DO EVENTO RECEBIDO', event);
+    }
+  }
+
+  handleDeleteProductAction(event: DeleteProductAction): void {
+    if (event) {
+      this.confirmationService.confirm({
+        message: `Confirma a exclusão do produto: ${event?.productName}?`,
+        header: 'Confirmação de exclusão',
+        icon: 'pi pi-exclamation-triangle',
+        acceptLabel: 'Sim',
+        rejectLabel: 'Não',
+        accept: () => this.deleteProduct(event?.product_id),
+      });
+    }
+  }
+
+  deleteProduct(product_id: string) {
+    if (product_id) {
+      this.productsService.deleteProduct(product_id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            if (response) {
+              this.notificationService.showNotificationMessage('Sucesso', 'Produto removido com sucesso', NotificationType.SUCCESS, 3000);
+              this.getAPIProductsDatas();
+            }
+          },
+          error: (err) => this.notificationService.showNotificationMessage('Erro', 'Ocorreu um erro ao tentar remover o produto', NotificationType.ERROR, 3000),
+        });
     }
   }
 
