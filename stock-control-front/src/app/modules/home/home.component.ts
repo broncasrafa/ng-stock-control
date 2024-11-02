@@ -10,6 +10,7 @@ import { AuthRequest } from 'src/app/models/interfaces/auth/AuthRequest';
 import { AuthResponse } from 'src/app/models/interfaces/auth/AuthResponse';
 import { SignupUserRequest } from 'src/app/models/interfaces/user/SignupUserRequest';
 import { SignupUserResponse } from 'src/app/models/interfaces/user/SignupUserResponse';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -34,6 +35,7 @@ export class HomeComponent {
 
   constructor(
     private formBuilder: FormBuilder,
+    private router: Router,
     private userService: UserService,
     private cookieService: CookieService,
     private notificationService: NotificationService) { }
@@ -49,6 +51,7 @@ export class HomeComponent {
             if (response) {
               this.cookieService.set('USER_INFO', response?.token);
               this.loginForm.reset();
+              this.router.navigate(['/dashboard']);
               this.notificationService.showNotificationMessage('Sucesso', `Bem vindo ${response.name}!`, NotificationType.SUCCESS);
             }
           },
