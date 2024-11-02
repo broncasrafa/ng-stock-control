@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { NotificationType } from 'src/app/core/enums/notificationType.enum';
 
 type NotificationTypeValids = 'success' | 'info' | 'warn' | 'error';
 
@@ -34,12 +35,4 @@ export class NotificationService {
   private isValidNotificationType(type: string): type is NotificationTypeValids {
     return Object.values(NotificationType).includes(type as NotificationType);
   }
-}
-
-
-export enum NotificationType {
-  SUCCESS = 'success',
-  INFO = 'info',
-  WARN = 'warn',
-  ERROR = 'error'
 }

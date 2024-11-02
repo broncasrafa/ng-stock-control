@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { NotificationType } from 'src/app/core/enums/notificationType.enum';
+import { EventAction } from 'src/app/models/interfaces/products/event/EventAction';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
-import { NotificationService, NotificationType } from 'src/app/services/notification/notification.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { ProductsDataTransferService } from 'src/app/services/products/products-data-transfer.service';
 import { ProductsService } from 'src/app/services/products/products.service';
 
@@ -54,6 +56,12 @@ export class ProductsHomeComponent implements OnInit, OnDestroy {
           this.router.navigate(['/dashboard']);
         },
       });
+  }
+
+  handleProductAction(event: EventAction): void {
+    if (event) {
+      console.log('DADOS DO EVENTO RECEBIDO', event);
+    }
   }
 
 

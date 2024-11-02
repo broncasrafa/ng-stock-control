@@ -5,7 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from 'src/app/services/user/user.service';
-import { NotificationService, NotificationType } from 'src/app/services/notification/notification.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 import { AuthRequest } from 'src/app/models/interfaces/auth/AuthRequest';
 import { AuthResponse } from 'src/app/models/interfaces/auth/AuthResponse';
@@ -13,6 +13,7 @@ import { SignupUserRequest } from 'src/app/models/interfaces/user/SignupUserRequ
 import { SignupUserResponse } from 'src/app/models/interfaces/user/SignupUserResponse';
 import { Router } from '@angular/router';
 import { AppConstants } from 'src/app/core/constants/app.constants';
+import { NotificationType } from 'src/app/core/enums/notificationType.enum';
 
 
 

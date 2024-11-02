@@ -4,9 +4,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 import { ChartData, ChartOptions } from 'chart.js';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
-import { NotificationService, NotificationType } from 'src/app/services/notification/notification.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 import { ProductsDataTransferService } from 'src/app/services/products/products-data-transfer.service';
 import { ProductsService } from 'src/app/services/products/products.service';
+import { NotificationType } from 'src/app/core/enums/notificationType.enum';
 
 @Component({
   selector: 'app-dashboard-home',
