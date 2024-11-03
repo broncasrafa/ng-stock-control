@@ -15,6 +15,7 @@ import { CategoriesService } from 'src/app/services/categories/categories.servic
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { ProductsService } from 'src/app/services/products/products.service';
 import { ProductsDataTransferService } from 'src/app/services/products/products-data-transfer.service';
+import { SaleProductRequest } from 'src/app/models/interfaces/products/request/SaleProductRequest';
 
 @Component({
   selector: 'app-products-form',
@@ -99,6 +100,40 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
       })
   }
 
+  getProductSelectedDatas(productId: string): void {
+    const allProducts = this.productAction?.productDatas;
+
+    if (allProducts.length > 0) {
+      const productFiltered = allProducts.filter((element) => element?.id === productId);
+
+      if (productFiltered) {
+        this.productSelectedDatas = productFiltered[0];
+
+        this.editProductForm.setValue({
+          name: this.productSelectedDatas?.name,
+          price: this.productSelectedDatas?.price,
+          amount: this.productSelectedDatas?.amount,
+          description: this.productSelectedDatas?.description,
+          category_id: this.productSelectedDatas?.category?.id,
+        });
+      }
+    }
+  }
+
+  getProductDatas(): void {
+    this.productsService.getAllProducts()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          if (response.length > 0) {
+            this.productsDatas = response;
+            this.productsDatas && this.productsDataTransferService.setProductsDatas(this.productsDatas);
+          }
+        },
+        error: (err) => this.notificationService.showNotificationMessage('Erro', 'Ocorreu um erro ao tentar obter os produtos', NotificationType.ERROR)
+      });
+  }
+
   handleSubmitAddProduct(): void {
     if (this.addProductForm?.value && this.addProductForm?.valid) {
       const request = this.addProductForm.value as CreateProductRequest;
@@ -147,39 +182,33 @@ export class ProductsFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  getProductSelectedDatas(productId: string): void {
-    const allProducts = this.productAction?.productDatas;
+  handleSubmitSaleProduct(): void {
+    if (this.saleProductForm?.value && this.saleProductForm?.valid) {
+      const request: SaleProductRequest = {
+        amount: this.saleProductForm.value?.amount as number,
+        product_id: this.saleProductForm.value?.product_id as string,
+      };
 
-    if (allProducts.length > 0) {
-      const productFiltered = allProducts.filter((element) => element?.id === productId);
-
-      if (productFiltered) {
-        this.productSelectedDatas = productFiltered[0];
-
-        this.editProductForm.setValue({
-          name: this.productSelectedDatas?.name,
-          price: this.productSelectedDatas?.price,
-          amount: this.productSelectedDatas?.amount,
-          description: this.productSelectedDatas?.description,
-          category_id: this.productSelectedDatas?.category?.id,
+      this.productsService.saleProduct(request)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            if (response) {
+              this.notificationService.showNotificationMessage('Sucesso', 'Venda efetuada com sucesso', NotificationType.SUCCESS);
+              this.saleProductForm.reset();
+              this.getProductDatas();
+              this.router.navigate(['/dashboard']);
+            }
+          },
+          error: (err) => {
+            this.saleProductForm.reset();
+            this.notificationService.showNotificationMessage('Erro', 'Ocorreu um erro ao tentar efetuar a venda do produto', NotificationType.ERROR);
+          },
         });
-      }
     }
   }
 
-  getProductDatas(): void {
-    this.productsService.getAllProducts()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (response) => {
-          if (response.length > 0) {
-            this.productsDatas = response;
-            this.productsDatas && this.productsDataTransferService.setProductsDatas(this.productsDatas);
-          }
-        },
-        error: (err) => this.notificationService.showNotificationMessage('Erro', 'Ocorreu um erro ao tentar obter os produtos', NotificationType.ERROR)
-      });
-  }
+
 
   ngOnDestroy(): void {
     this.destroy$.next();

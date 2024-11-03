@@ -4,9 +4,12 @@ import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { GetAllProductsResponse } from 'src/app/models/interfaces/products/response/GetAllProductsResponse';
 import { DeleteProductResponse } from 'src/app/models/interfaces/products/response/DeleteProductResponse';
-import { CreateProductRequest } from 'src/app/models/interfaces/products/request/CreateProductRequest';
 import { CreateProductResponse } from 'src/app/models/interfaces/products/response/CreateProductResponse';
+import { SaleProductResponse } from 'src/app/models/interfaces/products/response/SaleProductResponse';
+import { CreateProductRequest } from 'src/app/models/interfaces/products/request/CreateProductRequest';
 import { EditProductRequest } from 'src/app/models/interfaces/products/request/EditProductRequest';
+import { SaleProductRequest } from 'src/app/models/interfaces/products/request/SaleProductRequest';
+
 
 @Injectable({
   providedIn: 'root'
@@ -39,5 +42,18 @@ export class ProductsService {
 
   editProduct(request: EditProductRequest): Observable<void> {
     return this.http.put<void>(`${this.API_URL}/product/edit`, request);
+  }
+
+  saleProduct(request: SaleProductRequest): Observable<SaleProductResponse> {
+    return this.http.put<SaleProductResponse>(`${this.API_URL}/product/sale`,
+      {
+        amount: request?.amount,
+      },
+      {
+        params: {
+          product_id: request?.product_id,
+        },
+      }
+    );
   }
 }
