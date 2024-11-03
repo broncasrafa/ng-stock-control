@@ -28,6 +28,13 @@ class SaleProductService {
           amount: true,
         },
       });
+
+      await prismaClient.item.create({
+        data: {
+          amount: amount,
+          product_id: product_id
+        },
+      })
       return saveSale;
     } else {
       throw new Error("Não foi possível efetuar a venda!");
